@@ -1,0 +1,128 @@
+
+==================== DAY 1 ====================
+Events processed:
+  E1   Posted               Credit AED 1200.00
+  E2   Posted               Debit AED 950.00
+Closing ledger balance D1 (value_date <= D1, as known at end of D1):
+  ACC-001  ledger       AED 250.00   available       AED 250.00
+  ACC-002  ledger        BHD 0.000   available        BHD 0.000
+Restated earlier days (back-valued entries changed a day already reported):
+  none
+Fee assessments:
+  none
+Authorization states:
+  none
+Errors / exceptions:
+  none
+
+==================== DAY 2 ====================
+Events processed:
+  E3   Approved             Auth-A hold AED 200.00, available after 50.00
+Closing ledger balance D2 (value_date <= D2, as known at end of D2):
+  ACC-001  ledger       AED 250.00   available        AED 50.00
+  ACC-002  ledger        BHD 0.000   available        BHD 0.000
+Restated earlier days (back-valued entries changed a day already reported):
+  none
+Fee assessments:
+  none
+Authorization states:
+  Auth-A  ACC-001 Approved  requested AED 200.00  active hold AED 200.00
+Errors / exceptions:
+  none
+
+==================== DAY 3 ====================
+Events processed:
+  E4   Posted               Credit AED 400.00
+Closing ledger balance D3 (value_date <= D3, as known at end of D3):
+  ACC-001  ledger       AED 650.00   available       AED 450.00
+  ACC-002  ledger        BHD 0.000   available        BHD 0.000
+Restated earlier days (back-valued entries changed a day already reported):
+  none
+Fee assessments:
+  none
+Authorization states:
+  Auth-A  ACC-001 Approved  requested AED 200.00  active hold AED 200.00
+Errors / exceptions:
+  none
+
+==================== DAY 4 ====================
+Events processed:
+  E5   Posted               Auth-A settled AED 185.00, hold AED 200.00 released
+  E6   PostedWithException  UnmatchedSettlement: Auth-Z has no open authorization; AED 180.00 force-posted and queued for exception review
+Closing ledger balance D4 (value_date <= D4, as known at end of D4):
+  ACC-001  ledger       AED 285.00   available       AED 285.00
+  ACC-002  ledger        BHD 0.000   available        BHD 0.000
+Restated earlier days (back-valued entries changed a day already reported):
+  none
+Fee assessments:
+  none
+Authorization states:
+  Auth-A  ACC-001 Settled   requested AED 200.00  active hold AED 0.00
+Errors / exceptions:
+  E6     UnmatchedSettlement        [funds moved] Auth-Z has no open authorization; AED 180.00 force-posted and queued for exception review
+
+==================== DAY 5 ====================
+Events processed:
+  E7   Posted               Debit AED 620.00
+  E8   Declined             Auth-B would leave available AED -425.00 < 0
+Closing ledger balance D5 (value_date <= D5, as known at end of D5):
+  ACC-001  ledger      AED -410.00   available      AED -410.00
+  ACC-002  ledger        BHD 0.000   available        BHD 0.000
+Restated earlier days (back-valued entries changed a day already reported):
+  ACC-001 D2: AED 250.00 -> AED -395.00
+  ACC-001 D3: AED 650.00 -> AED 5.00
+  ACC-001 D4: AED 285.00 -> AED -385.00
+Fee assessments:
+  ACC-001 overdraft fee AED 25.00 value D2, booked D5 (D2 closing before fee AED -370.00)
+  ACC-001 overdraft fee AED 25.00 value D4, booked D5 (D4 closing before fee AED -360.00)
+  ACC-001 overdraft fee AED 25.00 value D5, booked D5 (D5 closing before fee AED -385.00)
+Authorization states:
+  Auth-A  ACC-001 Settled   requested AED 200.00  active hold AED 0.00
+  Auth-B  ACC-001 Declined  requested AED 90.00  active hold AED 0.00
+Errors / exceptions:
+  none
+
+==================== DAY 6 ====================
+Events processed:
+  E9   Posted               reversed E7 (AED 620.00) value D2
+  E10  Posted               Credit BHD 3.334 + 3.333 + 3.333
+Closing ledger balance D6 (value_date <= D6, as known at end of D6):
+  ACC-001  ledger       AED 210.69   available       AED 210.69
+  ACC-002  ledger       BHD 10.008   available       BHD 10.008
+Restated earlier days (back-valued entries changed a day already reported):
+  ACC-001 D2: AED -395.00 -> AED 225.00
+  ACC-001 D3: AED 5.00 -> AED 625.00
+  ACC-001 D4: AED -385.00 -> AED 235.00
+  ACC-001 D5: AED -410.00 -> AED 210.00
+  ACC-002 D5: BHD 0.000 -> BHD 10.000
+Fee assessments:
+  none
+Authorization states:
+  Auth-A  ACC-001 Settled   requested AED 200.00  active hold AED 0.00
+  Auth-B  ACC-001 Declined  requested AED 90.00  active hold AED 0.00
+Errors / exceptions:
+  E10    LateEvent                  [no funds moved] booked D5 but replayed after D5 closed; processed on D6
+Interest accrual schedule (value-dated closing balance as known at end of window, positive only):
+  ACC-001 D1: basis     AED 250.00  x rate = 0.100000   -> AED 0.10
+  ACC-001 D2: basis     AED 225.00  x rate = 0.090000   -> AED 0.09
+  ACC-001 D3: basis     AED 625.00  x rate = 0.250000   -> AED 0.25
+  ACC-001 D4: basis     AED 235.00  x rate = 0.094000   -> AED 0.09
+  ACC-001 D5: basis     AED 210.00  x rate = 0.084000   -> AED 0.08
+  ACC-001 D6: basis     AED 210.00  x rate = 0.084000   -> AED 0.08
+  ACC-002 D1: basis      BHD 0.000  x rate = 0          -> BHD 0.000
+  ACC-002 D2: basis      BHD 0.000  x rate = 0          -> BHD 0.000
+  ACC-002 D3: basis      BHD 0.000  x rate = 0          -> BHD 0.000
+  ACC-002 D4: basis      BHD 0.000  x rate = 0          -> BHD 0.000
+  ACC-002 D5: basis     BHD 10.000  x rate = 0.0040000  -> BHD 0.004
+  ACC-002 D6: basis     BHD 10.000  x rate = 0.0040000  -> BHD 0.004
+  ACC-001 capitalized as one credit value D6: AED 0.69
+  ACC-002 capitalized as one credit value D6: BHD 0.008
+
+==================== FINAL VALUE-DATED LEDGER (as known at end of D6) ====================
+  account              D1            D2            D3            D4            D5            D6
+  ACC-001          250.00        225.00        625.00        235.00        210.00        210.69
+  ACC-002           0.000         0.000         0.000         0.000        10.000        10.008
+Trial balance per currency (customer + internal GL legs, must be zero):
+  AED 0.00
+  BHD 0.000
+Entries: 30  Events received: 10  Errors: 2
